@@ -10,7 +10,7 @@ This repository includes:
 - Hedge (/delta) parameter calculation
 - Euler method for hedging simulation
 
-In the paper, we provide the following studies:
+In the paper, the following studies are carried out:
 - Theoretical overview of continuous compounding and coupon bonds, no-arbitrage principle, forward contracts, put-call parity, etc...
 - Convergence studies of the Binomial Model for increasing number of steps in the tree and comparisson with Black-Scholes
 - Response of these models to varying volatility
