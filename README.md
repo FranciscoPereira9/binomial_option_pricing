@@ -1,7 +1,7 @@
 # binomial_option_pricing
 
 An implementation of the Binomial Tree model for European and American options.
-
+Cancel changes
 ![binomial_model](binom.jpg)
 
 This repository includes:
@@ -10,7 +10,7 @@ This repository includes:
 - Hedge (/delta) parameter calculation
 - Euler method for hedging simulation
 
-In the paper, we provide the following studies:
+In the paper, the following studies are carried out:
 - Theoretical overview of continuous compounding and coupon bonds, no-arbitrage principle, forward contracts, put-call parity, etc...
 - Convergence studies of the Binomial Model for increasing number of steps in the tree and comparisson with Black-Scholes
 - Response of these models to varying volatility
@@ -18,3 +18,4 @@ In the paper, we provide the following studies:
 Future Tasks:
 - [ ] Visualise binomial tree in streamlit dashboard
 - [ ] Publish streamlit app
+
