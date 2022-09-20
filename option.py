@@ -157,11 +157,14 @@ class EuropeanOption(Option, ABC):
         p = ((e ** (self.r * dt)) - d) / (u - d)
         # bring back payoffs to time 0
         for i in range(n_steps, 0, -1):
+            # select upper and lower option prices of the matrix at time t
             f_u = option_prices[:i, i]
             f_d = option_prices[1:i + 1, i]
+            # calculate option prices at time t-1
             f = (e ** (-self.r * dt)) * ((p * f_u) + ((1 - p) * f_d))
+            # replace in option price matrix
             option_prices[:i, i - 1] = f
-        # retrieve option price today
+        # retrieve option fair price t=0
         option_prices[0, 0] = (e ** (-self.r * dt)) * ((p * option_prices[0, 1]) + ((1 - p) * option_prices[1, 1]))
         return option_prices[0, 0], option_prices
 
@@ -235,12 +238,16 @@ class AmericanOption(Option, ABC):
         p = ((e ** (self.r * dt)) - d) / (u - d)
         # bring back payoffs to time 0
         for i in range(n_steps, 0, -1):
+            # select upper and lower option prices of the matrix at time t
             f_u = option_values[:i, i]
             f_d = option_values[1:i + 1, i]
+            # calculate option prices at time t-1
             f = (e ** (-self.r * dt)) * ((p * f_u) + ((1 - p) * f_d))
+            # compare with intrinsic value and choose maximum (account for early exercise opportunity)
             f = np.maximum(f, self.calculate_payoff(asset_prices[:i, i - 1]))
+            # replace in option price matrix
             option_values[:i, i - 1] = f
-        # retrieve option price
+        # retrieve option fair price t=0
         option_values[0, 0] = (e ** (-self.r * dt)) * ((p * option_values[0, 1]) + ((1 - p) * option_values[1, 1]))
         option_values[0, 0] = np.maximum(option_values[0, 0], self.calculate_payoff(asset_prices[0, 0]))
         return option_values[0, 0], option_values
@@ -249,9 +256,13 @@ class AmericanOption(Option, ABC):
 if __name__ == "__main__":
     # Initialize option object
     print('American Option:')
-    american_opt = AmericanOption(s=275, k=270, t=3.0, r=0.05, sigma=0.2, opt_type='put')
+    american_opt = AmericanOption(s=100, k=120, t=20.0, r=0.00, sigma=0.01, opt_type='put')
     american_opt.binomial_model_overview(n_steps=3)
     print('European Option:')
-    european_opt = EuropeanOption(s=275, k=270, t=3.0, r=0.05, sigma=0.2, opt_type='put')
-    european_opt.binomial_model_overview(n_steps=3)
+    european_opt = EuropeanOption(s=100, k=120, t=20.0, r=0.0, sigma=0.01, opt_type='put')
+    european_opt.binomial_model_overview(n_steps=20)
+    european_opt.blackscholes_price()
+    print('European Option:')
+    european_opt = EuropeanOption(s=100, k=80, t=20.0, r=0.0, sigma=0.01, opt_type='call')
+    european_opt.binomial_model_overview(n_steps=21)
     european_opt.blackscholes_price()
