@@ -18,6 +18,6 @@ In the paper, the following studies are carried out:
 - Response of these models to varying volatility
 
 Future Tasks:
-- [ ] Visualise binomial tree in streamlit dashboard
-- [ ] Publish streamlit app
+- [x] Visualise binomial tree in streamlit dashboard
+- [x] Publish streamlit app
 
